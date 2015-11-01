@@ -28,7 +28,7 @@ package org.escom.resdes.model;
  * @author darcusfenix
  */
 public class Producto {
-    private String sku;
+    private Integer sku;
     private String nombre;
     private String descripcion;
     private String urlImagen;
@@ -41,11 +41,11 @@ public class Producto {
         this.nombre = nombre;
     }
 
-    public String getSku() {
+    public Integer getSku() {
         return sku;
     }
 
-    public void setSku(String sku) {
+    public void setSku(Integer sku) {
         this.sku = sku;
     }
 
@@ -63,6 +63,11 @@ public class Producto {
 
     public void setUrlImagen(String urlImagen) {
         this.urlImagen = urlImagen;
+    }
+
+    @Override
+    public String toString() {
+        return "Producto{" + "sku=" + sku + ", nombre=" + nombre + ", descripcion=" + descripcion + ", urlImagen=" + urlImagen + '}';
     }
 
     

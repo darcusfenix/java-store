@@ -25,11 +25,14 @@ package org.escom.resdes.app;
 
 import java.net.*;
 import java.io.*;
+import java.util.List;
+import org.escom.resdes.model.Producto;
+import org.escom.resdes.repository.ProductoRepository;
+import org.escom.resdes.repository.ProductoRepositoryImp;
 
 public class Servidor {
-
-    public static void main(String[] args) throws Exception {
-
+    
+    public void Iniciar() throws Exception {
         try {
             //creamos el socketServer en el mismo puerto donde se comunica el cliente
             ServerSocket ss = new ServerSocket(4000);
@@ -57,7 +60,38 @@ public class Servidor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    
+    public void enviarProductos(){
+        
+    }
+    
+    public void enviarImagenes(){
+        
+    }
 
+    public static void main(String[] args) {
+        ProductoRepository pr = new ProductoRepositoryImp();
+        /*
+        Producto producto = new Producto();
+        producto.setNombre("CHAMARRA PARA DAMA PEPE");
+        producto.setDescripcion("CHAMARRA PARA DAMA PEPE");
+        producto.setUrlImagen("/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/imagenes/1040479852.jpg");
+        pr.save(producto);
+        
+        
+        List<Producto> productos = pr.getAll();
+        System.out.println("[PRODUCTOS] " + productos);
+        
+        Producto producto = null;
+        producto = pr.getById(2);
+        producto.setNombre(producto.getNombre() + " EDITADO");
+        producto.setDescripcion(producto.getDescripcion()+ " EDITADO");
+        producto.setUrlImagen(producto.getUrlImagen()+ " EDITADO");
+        pr.update(producto);
+        pr.delete(producto);
+        
+        */
     }//main
 
     public static void RecibeArchivo(ObjectInputStream ois) throws IOException, ClassNotFoundException {

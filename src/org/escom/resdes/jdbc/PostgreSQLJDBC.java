@@ -30,6 +30,7 @@ public class PostgreSQLJDBC {
                             "postgres", "2706");
             System.out.println("CONECCTION SUCCESFULL");
             return true;
+
         } catch (Exception e) {
             System.err.println(e.getMessage());
             return false;
@@ -55,21 +56,20 @@ public class PostgreSQLJDBC {
                 pst.executeUpdate();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
-            }finally {
+            } finally {
 
-            try {
-                if (pst != null) {
-                    pst.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
+                try {
+                    if (pst != null) {
+                        pst.close();
+                    }
+                    if (connection != null) {
+                        connection.close();
+                    }
 
-            } catch (SQLException ex) {
-                System.err.println(ex.getMessage());
+                } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
+                }
             }
-        }
-
         }
     }
 }
