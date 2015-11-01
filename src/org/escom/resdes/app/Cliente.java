@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package app;
+package org.escom.resdes.app;
 
 import java.net.*;
 import java.io.*;
@@ -69,53 +69,45 @@ public class Cliente {
         return f;
     }
 
-    public static void EnviarArchivo(String path, String nombreArchivo, long tam, ObjectOutputStream oos) throws Exception {
-
-        try {
-
-            //creamos el archivo que vamos a enviar
-            FileInputStream archivo = new FileInputStream(path);
-            System.out.println("\nArchivo seleccionado: " + nombreArchivo);
-            //Enviamos el nombre del archivo
-            oos.writeObject(nombreArchivo);
-            //Enviamos el direccion del archivo
-            oos.writeObject(path);
-            //Enviamos el tamaño del archivo
-            oos.writeObject(tam);
-            byte[] buf2 = new byte[1024];
-            //enviamos los bytes del archivo
-
-            int b_leidos = 0, tam_bloque;
-
-            long completados = 0, leidos = 0;
-
-            System.out.println("Tamaño archivo: " + archivo.available() + " bytes..");
-
-            tam_bloque = (archivo.available() >= 1024) ? 1024 : archivo.available();
-            long tam_arch = archivo.available();
-
-            while ((b_leidos = archivo.read(buf2, 0, buf2.length)) != -1) {
-                oos.write(buf2, 0, b_leidos);
-                oos.flush();
-                leidos += tam_bloque;
-                completados = (leidos * 100) / tam_arch;
-                System.out.print("\rCompletado: " + completados + " %");
-                tam_bloque = (archivo.available() >= 1024) ? 1024 : archivo.available();
+    public static void EnviarArchivo(String path, String nombreArchivo, long tam,ObjectOutputStream oos ) throws Exception{
+        
+            try{
+                
+                //creamos el archivo que vamos a enviar
+                FileInputStream archivo=new FileInputStream(path);
+                System.out.println("\nArchivo seleccionado: "+nombreArchivo);
+                //Enviamos el nombre del archivo
+                oos.writeObject(nombreArchivo);
+                //Enviamos el direccion del archivo
+                oos.writeObject(path); 
+                //Enviamos el tamaño del archivo
+                oos.writeObject(tam);  
+                byte[] buf2 = new byte[1024];
+                //enviamos los bytes del archivo
+                int b_leidos = 0, tam_bloque;
+                long completados=0, leidos=0;
+                System.out.println("Tamaño archivo: " + archivo.available() + " bytes..");
+                tam_bloque =  (archivo.available()>=1024)?1024:archivo.available(); 
+                long tam_arch = archivo.available();
+                
+                
+                while((b_leidos = archivo.read(buf2,0,buf2.length))!=-1){
+                    oos.write(buf2,0,b_leidos);
+                    oos.flush();
+                    leidos += tam_bloque;
+                    completados = (leidos * 100) / tam_arch;
+                    System.out.print("\rCompletado: " + completados +" %");
+                    tam_bloque = (archivo.available()>=1024)?1024:archivo.available();
+                }
+                System.out.println("\nBytes enviados: " + leidos + "\n");
+                //cerramos socket y flujos
+                archivo.close();
+                System.out.println("Archivo enviado....");
+            
+            }catch(IOException e){
+                e.printStackTrace();
             }
-            System.out.println("\nBytes envia
-            while ((fin > 0) && (b_leidos = ois.read(buf, 0, (int) Math.min(buf.length, fin))) != -1) {
-
-                inFile.write(buf, 0, b_leidos);
-                inFile.flush();
-                leidos += b_leidos;
-                fin -= b_leidos;dos: " + leidos + "\n");
-            //cerramos socket y flujos
-            archivo.close();
-            System.out.println("Archivo enviado....");
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        
+        
         }
-
-    }
 }//class

@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ui;
+package org.escom.resdes.ui;
 
 import java.io.IOException;
 import java.net.InetAddress;

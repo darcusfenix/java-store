@@ -21,36 +21,19 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package test;
+package org.escom.resdes.repository;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.util.List;
+import org.escom.resdes.model.Producto;
 
 /**
  *
  * @author darcusfenix
  */
-class TCPServer {
-
-    public static void main(String argv[]) throws Exception {
-        String clientSentence;
-        String capitalizedSentence;
-        ServerSocket welcomeSocket = new ServerSocket(6770);
-        while (true) {
-            Socket connectionSocket = welcomeSocket.accept();
-            
-            BufferedReader inFromClient = new BufferedReader(new InputStreamReader(connectionSocket.getInputStream()));
-            DataOutputStream outToClient = new DataOutputStream(connectionSocket.getOutputStream());
-            
-            clientSentence = inFromClient.readLine();
-            
-            System.out.println("Recibido: " + clientSentence);
-            capitalizedSentence = clientSentence.toUpperCase() + '\n';
-            outToClient.writeBytes(capitalizedSentence);
-            welcomeSocket.close();
-        }
+public class ProductoRepositoryImp implements ProductoRepository {
+    @Override
+    public List<Producto> getAll(){
+         List<Producto> produtos = null;
+         return produtos;
     }
 }

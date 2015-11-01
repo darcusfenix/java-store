@@ -21,20 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ui;
+package org.escom.resdes.ui;
 
-import bean.Archivo;
-import test.Cliente;
+
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 import javax.swing.JFileChooser;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableColumnModel;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -45,15 +37,13 @@ public class JFrameClientIndex extends javax.swing.JFrame {
     /**
      * Creates new form JFrameIndex
      */
-    private List<Archivo> archivos;
+    
     public JFrameClientIndex() {
         initComponents();
-        setTextLOG("INFO: SE INICIÓ LA CONEXIÓN");
-        archivos = new ArrayList<Archivo>();
     }
     public void setTextLOG(String text){
-        String LOG = textAreaLogClient.getText() + "\n" + "["+(new Date())+"] " + text;
-        textAreaLogClient.setText(LOG);
+        
+        
     }
 
     /**
@@ -177,49 +167,7 @@ public class JFrameClientIndex extends javax.swing.JFrame {
         String spn = files.length > 1 ? "ARCHIVOS" : "ARCHIVO";
         setTextLOG("INFO: SE SELECCIONARON " + files.length + " " + spn);
 
-        for (Integer i = 0; i < files.length; i++) {
-            String extension = "";
 
-            Integer j = files[i].getName().lastIndexOf('.');
-            if (j > 0) {
-                extension = files[i].getName().substring(j + 1);
-            }
-            
-            Archivo archivo = new Archivo(files[i].getName(), extension, files[i].length(), false, 0, files[i].getAbsolutePath());
-            setTextLOG("INFO: Archivo [" + (i + 1) + "] { " + "NOMBRE: " + archivo.getNombre() +", " +
-                    " EXTENSIÓN: " + archivo.getTipo() +", " +
-                    " NOMBRE: " + archivo.getNombre() +", " +
-                    " BYTES: " + archivo.getSize()+", " +
-                    " ESTADO: " + archivo.isEstado() +", " +
-                    " PORCENTAJE: " + archivo.getPorcentaje() +"}");
-            
-            archivos.add(archivo);
-            
-            for (Integer w = 0; w < 5; w++){
-                String mensaje = null;
-                switch(w){
-                    case 0: 
-                        mensaje = archivo.getNombre();
-                        break;
-                    case 1:
-                        mensaje = archivo.getTipo();
-                        break;
-                    case 2:
-                        mensaje = archivo.getSize() + " \t bytes";
-                        break;
-                    case 3:
-                        mensaje = archivo.isEstado() ? "Enviado" : "En pausa";
-                        break;
-                    case 4:
-                        mensaje = "% \t" + archivo.getPorcentaje();
-                        break;
-                    default:
-                        mensaje = "upss";
-                        break;
-                }
-                tableClient.getModel().setValueAt(mensaje, i, w);
-            }
-        }
         
     }//GEN-LAST:event_btnUploadFIlesActionPerformed
 

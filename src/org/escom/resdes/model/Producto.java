@@ -21,36 +21,49 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package test;
-
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.InputStreamReader;
-import java.net.Socket;
+package org.escom.resdes.model;
 
 /**
  *
  * @author darcusfenix
  */
-class TCPClient {
+public class Producto {
+    private String sku;
+    private String nombre;
+    private String descripcion;
+    private String urlImagen;
 
-    public static void main(String argv[]) throws Exception {
-        String sentence;
-        String modifiedSentence;
-        
-        BufferedReader inFromUser = new BufferedReader(new InputStreamReader(System.in));
-        Socket clientSocket = new Socket("192.168.1.84", 6770);
-        
-        DataOutputStream outToServer = new DataOutputStream(clientSocket.getOutputStream());
-        BufferedReader inFromServer = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        
-        sentence = inFromUser.readLine();
-        outToServer.writeBytes(sentence + '\n');
-        
-        modifiedSentence = inFromServer.readLine();
-        
-        System.out.println("FROM SERVER: " + modifiedSentence);
-        
-        clientSocket.close();
+    public String getNombre() {
+        return nombre;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getUrlImagen() {
+        return urlImagen;
+    }
+
+    public void setUrlImagen(String urlImagen) {
+        this.urlImagen = urlImagen;
+    }
+
+    
 }

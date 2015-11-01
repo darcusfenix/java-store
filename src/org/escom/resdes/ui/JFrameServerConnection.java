@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package ui;
+package org.escom.resdes.ui;
 
 import java.io.IOException;
 import javax.swing.JFrame;
@@ -57,7 +57,6 @@ public class JFrameServerConnection extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Práctica 1 - Iniciar Servidor");
         setAlwaysOnTop(true);
-        setMaximumSize(new java.awt.Dimension(468, 186));
         setMinimumSize(new java.awt.Dimension(468, 186));
         setName("frameServerInit"); // NOI18N
 
