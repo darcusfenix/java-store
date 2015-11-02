@@ -80,7 +80,20 @@ public class PostgreSQLJDBC {
  nombre      varchar(255) NOT NULL,
  descripcion varchar(255) NOT NULL,
  url_imagen  varchar(255) NOT NULL,
- costo float NOT NULL
+ costo float NOT NULL,
+ cantidad integer NOT NULL
  );
 
  */
+
+/*
+TENIS PARA DAMA VANS
+1039529901.jpg
+Tenis con aplicación perforado, silueta cerrada, punta redonda.
+719.00
+
+TENIS ADIDAS ZX FLUX SMOOTH PARA DAMA
+1039049551.jpg
+Tenis ideal para realizar actividades diarias, suela suave antiderrapante, logo de la marca.
+1119.00
+*/
