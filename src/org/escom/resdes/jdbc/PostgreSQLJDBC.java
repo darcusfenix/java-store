@@ -28,7 +28,6 @@ public class PostgreSQLJDBC {
             this.connection = DriverManager
                     .getConnection("jdbc:postgresql://localhost:5432/store",
                             "postgres", "2706");
-            System.out.println("CONECCTION SUCCESFULL");
             return true;
 
         } catch (Exception e) {
@@ -79,7 +78,8 @@ public class PostgreSQLJDBC {
  sku         serial PRIMARY KEY ,
  nombre      varchar(255) NOT NULL,
  descripcion varchar(255) NOT NULL,
- url_imagen  varchar(255) NOT NULL
+ url_imagen  varchar(255) NOT NULL,
+ costo float NOT NULL
  );
 
  */

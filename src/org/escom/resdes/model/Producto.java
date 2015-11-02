@@ -32,6 +32,7 @@ public class Producto {
     private String nombre;
     private String descripcion;
     private String urlImagen;
+    private float costo;
 
     public String getNombre() {
         return nombre;
@@ -65,6 +66,14 @@ public class Producto {
         this.urlImagen = urlImagen;
     }
 
+    public float getCosto() {
+        return costo;
+    }
+
+    public void setCosto(float costo) {
+        this.costo = costo;
+    }
+    
     @Override
     public String toString() {
         return "Producto{" + "sku=" + sku + ", nombre=" + nombre + ", descripcion=" + descripcion + ", urlImagen=" + urlImagen + '}';

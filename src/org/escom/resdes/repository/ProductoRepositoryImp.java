@@ -23,6 +23,9 @@
  */
 package org.escom.resdes.repository;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +33,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.jdbc.PostgreSQLJDBC;
 import org.escom.resdes.model.Producto;
 
@@ -51,13 +55,14 @@ public class ProductoRepositoryImp implements ProductoRepository {
             try {
                 stmt = connection.createStatement();
                 ResultSet rs = stmt.executeQuery(stm);
-                
+
                 while (rs.next()) {
-                    Producto producto= new Producto();
+                    Producto producto = new Producto();
                     producto.setSku(rs.getInt("sku"));
                     producto.setNombre(rs.getString("nombre"));
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setUrlImagen(rs.getString("url_imagen"));
+                    producto.setCosto(rs.getFloat("costo"));
                     productos.add(producto);
                 }
             } catch (Exception e) {
@@ -83,17 +88,69 @@ public class ProductoRepositoryImp implements ProductoRepository {
     }
 
     @Override
+    public void saveCatalogoOnServer() {
+        List<Producto> productos = new ArrayList<Producto>();
+
+        PostgreSQLJDBC bC = new PostgreSQLJDBC();
+        if (bC.conectarse()) {
+            Connection connection = bC.getConnection();
+            Statement stmt = null;
+            String stm = "SELECT * FROM producto;";
+            try {
+                stmt = connection.createStatement();
+                ResultSet rs = stmt.executeQuery(stm);
+
+                while (rs.next()) {
+                    Producto producto = new Producto();
+                    producto.setSku(rs.getInt("sku"));
+                    producto.setNombre(rs.getString("nombre"));
+                    producto.setDescripcion(rs.getString("descripcion"));
+                    producto.setUrlImagen(rs.getString("url_imagen"));
+                    producto.setCosto(rs.getFloat("costo"));
+                    productos.add(producto);
+                }
+                try {
+                    FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH + "PATH_SERVER/CATALOGO/catalogo.txt");
+                    ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                    out.writeObject(productos);
+                    out.close();
+                    fileOut.close();
+                } catch (IOException io) {
+                    System.err.println(io.getMessage());
+                }
+            } catch (Exception e) {
+                System.err.println(e.getMessage());
+            } finally {
+
+                try {
+                    if (stmt != null) {
+                        stmt.close();
+                    }
+
+                    if (connection != null) {
+                        connection.close();
+                    }
+                } catch (SQLException ex) {
+                    System.err.println(ex.getMessage());
+                }
+            }
+        }
+
+    }
+
+    @Override
     public void save(Producto producto) {
         PostgreSQLJDBC bC = new PostgreSQLJDBC();
         if (bC.conectarse()) {
             Connection connection = bC.getConnection();
             PreparedStatement pst = null;
-            String stm = "INSERT INTO producto(nombre, descripcion, url_imagen) VALUES(?, ?, ?)";
+            String stm = "INSERT INTO producto(nombre, descripcion, url_imagen, costo) VALUES(?, ?, ?, ?)";
             try {
                 pst = connection.prepareStatement(stm);
                 pst.setString(1, producto.getNombre());
                 pst.setString(2, producto.getDescripcion());
                 pst.setString(3, producto.getUrlImagen());
+                pst.setFloat(4, producto.getCosto());
                 pst.executeQuery();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -113,20 +170,21 @@ public class ProductoRepositoryImp implements ProductoRepository {
             }
         }
     }
-    
+
     @Override
     public void update(Producto producto) {
         PostgreSQLJDBC bC = new PostgreSQLJDBC();
         if (bC.conectarse()) {
             Connection connection = bC.getConnection();
             PreparedStatement pst = null;
-            String stm = "UPDATE producto SET nombre=?, descripcion=?, url_imagen=? WHERE sku=?;";
+            String stm = "UPDATE producto SET nombre=?, descripcion=?, url_imagen=?, costo=? WHERE sku=?;";
             try {
                 pst = connection.prepareStatement(stm);
                 pst.setString(1, producto.getNombre());
                 pst.setString(2, producto.getDescripcion());
                 pst.setString(3, producto.getUrlImagen());
-                pst.setInt(4, producto.getSku());
+                pst.setFloat(4, producto.getCosto());
+                pst.setInt(5, producto.getSku());
                 pst.executeUpdate();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -146,6 +204,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
             }
         }
     }
+
     @Override
     public void delete(Producto producto) {
         PostgreSQLJDBC bC = new PostgreSQLJDBC();
@@ -175,6 +234,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
             }
         }
     }
+
     @Override
     public Producto getById(Integer sku) {
         Producto producto = new Producto();
@@ -184,13 +244,14 @@ public class ProductoRepositoryImp implements ProductoRepository {
             Statement stmt = null;
             String stm = "SELECT * FROM producto WHERE sku =" + sku + " ;";
             try {
-                stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE);;
-                ResultSet rs = stmt.executeQuery(stm);  
-                if(rs.first()){
+                stmt = connection.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);;
+                ResultSet rs = stmt.executeQuery(stm);
+                if (rs.first()) {
                     producto.setSku(rs.getInt("sku"));
                     producto.setNombre(rs.getString("nombre"));
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setUrlImagen(rs.getString("url_imagen"));
+                    producto.setCosto(rs.getFloat("costo"));
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -212,4 +273,3 @@ public class ProductoRepositoryImp implements ProductoRepository {
         return producto;
     }
 }
-

@@ -33,6 +33,7 @@ import org.escom.resdes.model.Producto;
 public interface ProductoRepository {
 
     List<Producto> getAll();
+    void saveCatalogoOnServer();
     void save(Producto producto);
     void update(Producto producto);
     void delete(Producto producto);
