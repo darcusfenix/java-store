@@ -25,7 +25,6 @@ package org.escom.resdes.app;
 
 import java.net.*;
 import java.io.*;
-import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.app.util.FTP;
 import org.escom.resdes.app.util.FTPImp;
 import org.escom.resdes.repository.ProductoRepository;
@@ -47,30 +46,12 @@ public class Servidor {
             for (;;) {
                 Socket cl = ss.accept();
                 cl.setSoTimeout(3000);
-                //System.out.println("Cliente conectado desde:" + cl.getInetAddress() + ":" + cl.getPort());
 
                 ObjectInputStream ois = new ObjectInputStream(cl.getInputStream());
                 ObjectOutputStream oos = new ObjectOutputStream(cl.getOutputStream());
 
-                // EL SERVIDOR RECIBE SOLICITUDES
-//                Integer solicitud = (Integer) ois.readObject();
-
                 enviarImagenes(oos);
                 enviarCatalogo(oos);
-              
-                //Integer option = (Integer) ois.readObject();
-                /* PROCESO FTP NORMAL
-                 //obtenemos la cantidad de archivos a recibir
-                 Integer files = (Integer) ois.readObject();
-                
-                 System.out.println("Archivos a recibir: " + files);
-
-                 for (int i = 0; i < files; i++) {
-                 ftp.recibeArchivo(ois, "PATH_SERVER/FTP/");
-                 }
-                 */
-               // ois.close();
-             //  oos.close();
             }
 
         } catch (IOException e) {
@@ -90,11 +71,11 @@ public class Servidor {
             ftp.enviarArchivo(f1.getAbsolutePath(), f1.getName(), f1.length(), oos);
         }
     }
-    
+
     public void enviarCatalogo(ObjectOutputStream oos) throws Exception {
         ProductoRepository pr = new ProductoRepositoryImp();
         pr.saveCatalogoOnServer();
-        
+
         File[] f = null;
         f = ftp.selectFilesWithPath("PATH_SERVER/CATALOGO");
         oos.writeObject(f.length);

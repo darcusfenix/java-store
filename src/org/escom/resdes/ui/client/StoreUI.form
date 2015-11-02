@@ -30,7 +30,7 @@
                   <Component id="btn_show_producto_client" alignment="0" max="32767" attributes="0"/>
                   <Component id="btn_add_producto_client" alignment="0" max="32767" attributes="0"/>
                   <Component id="btn_update_list_client" alignment="0" pref="137" max="32767" attributes="0"/>
-                  <Component id="jButton1" alignment="0" max="32767" attributes="0"/>
+                  <Component id="btn_show_cesta" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jScrollPane1" pref="906" max="32767" attributes="0"/>
@@ -50,7 +50,7 @@
                       <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                       <Component id="btn_update_list_client" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                      <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                      <Component id="btn_show_cesta" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane1" min="-2" pref="213" max="-2" attributes="0"/>
               </Group>
@@ -144,10 +144,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_update_list_clientActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="btn_show_cesta">
       <Properties>
         <Property name="text" type="java.lang.String" value="MIRAR MI CESTA"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_show_cestaActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

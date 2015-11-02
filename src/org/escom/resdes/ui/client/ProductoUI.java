@@ -5,17 +5,77 @@
  */
 package org.escom.resdes.ui.client;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import org.escom.resdes.app.config.Propiedades;
+import org.escom.resdes.app.service.CestaService;
+import org.escom.resdes.app.service.CestaServiceImp;
+import org.escom.resdes.app.service.StoreService;
+import org.escom.resdes.app.service.StoreServiceImp;
+import org.escom.resdes.model.Orden;
+import org.escom.resdes.model.Producto;
+
 /**
  *
  * @author darcusfenix
  */
 public class ProductoUI extends javax.swing.JFrame {
 
+    private Producto producto;
+    private Orden orden;
+    private StoreService ss;
+    private CestaService cs;
+
     /**
      * Creates new form ProductoUI
      */
     public ProductoUI() {
         initComponents();
+    }
+
+    public ProductoUI(Producto producto) {
+        initComponents();
+        this.producto = producto;
+        this.ss = new StoreServiceImp();
+        this.cs = new CestaServiceImp();
+        updateInputs(this.producto);
+    }
+
+    public ProductoUI(Orden orden) {
+        initComponents();
+        this.orden = orden;
+        this.producto = this.orden.getProducto();
+        this.ss = new StoreServiceImp();
+        this.cs = new CestaServiceImp();
+        updateInputs(this.orden);
+    }
+
+    public void updateInputs(Producto producto) {
+        ImageIcon image = new ImageIcon(Propiedades.PATH + "PATH_CLIENT/IMAGES/" + this.producto.getUrlImagen());
+        this.label_img.setIcon(image);
+        this.tf_descripcion_product.setText(this.producto.getDescripcion());
+        this.tf_name_product.setText(this.producto.getNombre());
+        this.label_costo_product.setText("USD $ " + Float.toString(this.producto.getCosto()));
+        this.tf_cantidad_product.setText(this.producto.getCantidad().toString());
+        this.tf_cantidad_product.setEditable(false);
+        this.tf_descripcion_product.setEditable(false);
+        this.tf_name_product.setEditable(false);
+        this.label_cantidad.setText("EN EXISTENCIA");
+        this.btn_update_cantidad.setVisible(false);
+    }
+
+    public void updateInputs(Orden orden) {
+        ImageIcon image = new ImageIcon(Propiedades.PATH + "PATH_CLIENT/IMAGES/" + this.orden.getProducto().getUrlImagen());
+        this.label_img.setIcon(image);
+        this.tf_descripcion_product.setText(this.orden.getProducto().getDescripcion());
+        this.tf_name_product.setText(this.orden.getProducto().getNombre());
+        this.label_costo_product.setText("USD $ " + Float.toString(this.orden.getProducto().getCosto()));
+        this.tf_cantidad_product.setText(this.orden.getCantidad().toString());
+        this.tf_cantidad_product.setEditable(true);
+        this.tf_descripcion_product.setEditable(false);
+        this.tf_name_product.setEditable(false);
+        this.label_cantidad.setText("CANTIDAD REQUERIDA");
+        this.btn_add_cesta.setVisible(false);
     }
 
     /**
@@ -30,15 +90,18 @@ public class ProductoUI extends javax.swing.JFrame {
         label_img = new javax.swing.JLabel();
         label_name = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        label_cantidad = new javax.swing.JLabel();
         label_costo_product = new javax.swing.JLabel();
         tf_name_product = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tf_descripcion_product = new javax.swing.JTextArea();
         tf_cantidad_product = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        btn_add_cesta = new javax.swing.JButton();
+        btn_update_cantidad = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Producto");
 
         label_img.setText("IMAGEN");
 
@@ -46,7 +109,7 @@ public class ProductoUI extends javax.swing.JFrame {
 
         jLabel1.setText("DESCRIPCION:");
 
-        jLabel2.setText("CANTIDAD:");
+        label_cantidad.setText("CANTIDAD:");
 
         label_costo_product.setFont(new java.awt.Font("Noto Sans", 0, 24)); // NOI18N
         label_costo_product.setText("COSTO");
@@ -56,6 +119,25 @@ public class ProductoUI extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tf_descripcion_product);
 
         jButton1.setText("CERRAR");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        btn_add_cesta.setText("AGREGAR A LA CESTA");
+        btn_add_cesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_add_cestaActionPerformed(evt);
+            }
+        });
+
+        btn_update_cantidad.setText("AZTUALIZAR ");
+        btn_update_cantidad.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_update_cantidadActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -63,24 +145,25 @@ public class ProductoUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn_update_cantidad, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
+                        .addComponent(btn_add_cesta)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(tf_name_product)
+                    .addComponent(tf_cantidad_product)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 374, Short.MAX_VALUE)
-                            .addComponent(tf_name_product)
-                            .addComponent(tf_cantidad_product)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(label_name)
-                                    .addComponent(jLabel1)
-                                    .addComponent(label_costo_product))
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jButton1)))
+                            .addComponent(label_cantidad)
+                            .addComponent(label_name)
+                            .addComponent(jLabel1)
+                            .addComponent(label_costo_product))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -88,6 +171,9 @@ public class ProductoUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(46, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(label_name)
                         .addGap(2, 2, 2)
@@ -97,19 +183,43 @@ public class ProductoUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel2)
+                        .addComponent(label_cantidad)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tf_cantidad_product, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(label_img, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(label_costo_product)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addContainerGap())
+                        .addComponent(tf_cantidad_product, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(68, 68, 68)
+                        .addComponent(label_costo_product)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_add_cesta)
+                            .addComponent(jButton1)
+                            .addComponent(btn_update_cantidad))
+                        .addGap(90, 90, 90))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btn_add_cestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_cestaActionPerformed
+        cs.addProductoToCesta(this.producto, 1);
+        JOptionPane.showMessageDialog(null, "Se agregó el producto a la cesta");
+        this.dispose();
+    }//GEN-LAST:event_btn_add_cestaActionPerformed
+
+    private void btn_update_cantidadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_update_cantidadActionPerformed
+        try {
+            Integer nuevaCantidad = Integer.parseInt(this.tf_cantidad_product.getText());
+            if (nuevaCantidad > 0) {
+                cs.addProductoToCesta(this.producto, nuevaCantidad);
+                JOptionPane.showMessageDialog(null, "Se actualizó el producto en la cesta");
+                this.dispose();
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_update_cantidadActionPerformed
 
     /**
      * @param args the command line arguments
@@ -147,10 +257,12 @@ public class ProductoUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_add_cesta;
+    private javax.swing.JButton btn_update_cantidad;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_cantidad;
     private javax.swing.JLabel label_costo_product;
     private javax.swing.JLabel label_img;
     private javax.swing.JLabel label_name;

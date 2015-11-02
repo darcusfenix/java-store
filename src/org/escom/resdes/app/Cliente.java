@@ -25,6 +25,7 @@ package org.escom.resdes.app;
 
 import java.net.*;
 import java.io.*;
+import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.app.util.FTP;
 import org.escom.resdes.app.util.FTPImp;
 import org.escom.resdes.ui.client.StoreUI;
@@ -43,20 +44,19 @@ public class Cliente {
     public void conectarse() throws Exception {
 
         try {
-            //creamos el socket con la dirección y el puerto de comunicación
-            Socket cl = new Socket(InetAddress.getByName("127.0.0.1"), 4040);
+            
+            Socket cl = new Socket(InetAddress.getByName(Propiedades.IP), 4040);
             cl.setSoTimeout(3000);
             System.out.println("Cliente conectado con servidor..\n transfiriendo archivo..");
-            for (;;) {
-                ObjectOutputStream oos = new ObjectOutputStream(cl.getOutputStream());
-                ObjectInputStream ois = new ObjectInputStream(cl.getInputStream());
+            
+            ObjectOutputStream oos = new ObjectOutputStream(cl.getOutputStream());
+            ObjectInputStream ois = new ObjectInputStream(cl.getInputStream());
 
-                //oos.writeObject(Propiedades.SOLICITUD_IMG);
-                recibirImagenes(ois);
-                recibirCatalogo(ois);
-                showUI();
+            
+            recibirImagenes(ois);
+            recibirCatalogo(ois);
+            showUI();
 
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,7 +81,8 @@ public class Cliente {
         }
         return true;
     }
-    public void showUI(){
+
+    public void showUI() {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new StoreUI().setVisible(true);

@@ -6,6 +6,7 @@
 package org.escom.resdes.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,15 +14,20 @@ import java.util.List;
  * @author darcusfenix
  */
 public class Cesta implements Serializable{
-    private List<Orden> cesta;
+    private List<Orden> ordenes;
     private float total;
-
-    public List<Orden> getCesta() {
-        return cesta;
+    
+    public Cesta(){
+        this.ordenes = new ArrayList<Orden>();
+        this.total = 0f;
     }
 
-    public void setCesta(List<Orden> cesta) {
-        this.cesta = cesta;
+    public List<Orden> getOrdenes() {
+        return ordenes;
+    }
+
+    public void setOrdenes(List<Orden> ordenes) {
+        this.ordenes = ordenes;
     }
 
     public float getTotal() {
@@ -31,6 +37,10 @@ public class Cesta implements Serializable{
     public void setTotal(float total) {
         this.total = total;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Cesta{" + "ordenes=" + ordenes + ", total=" + total + '}';
+    }
     
 }

@@ -6,13 +6,15 @@
 package org.escom.resdes.ui.client;
 
 import org.escom.resdes.ui.admin.AdminUI;
-import org.escom.resdes.ui.admin.ProductoFormUI;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import org.escom.resdes.app.config.Propiedades;
+import org.escom.resdes.app.service.CestaService;
+import org.escom.resdes.app.service.CestaServiceImp;
 import org.escom.resdes.app.service.StoreService;
 import org.escom.resdes.app.service.StoreServiceImp;
 import org.escom.resdes.model.Catalogo;
+import org.escom.resdes.model.Cesta;
 import org.escom.resdes.model.Producto;
 import org.escom.resdes.repository.ProductoRepository;
 import org.escom.resdes.repository.ProductoRepositoryImp;
@@ -25,6 +27,7 @@ public class StoreUI extends javax.swing.JFrame {
 
     private ProductoRepository pr;
     private StoreService ss;
+    private CestaService cs;
 
     /**
      * Creates new form ServerAdmin
@@ -33,6 +36,8 @@ public class StoreUI extends javax.swing.JFrame {
         initComponents();
         pr = new ProductoRepositoryImp();
         ss = new StoreServiceImp();
+        cs = new CestaServiceImp();
+        ss.saveCesta(new Cesta());
         updateTable();
     }
 
@@ -50,7 +55,7 @@ public class StoreUI extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         table_productos_client = new javax.swing.JTable();
         btn_update_list_client = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btn_show_cesta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Store");
@@ -94,7 +99,12 @@ public class StoreUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("MIRAR MI CESTA");
+        btn_show_cesta.setText("MIRAR MI CESTA");
+        btn_show_cesta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_show_cestaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -106,7 +116,7 @@ public class StoreUI extends javax.swing.JFrame {
                     .addComponent(btn_show_producto_client, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_add_producto_client, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btn_update_list_client, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btn_show_cesta, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 906, Short.MAX_VALUE)
                 .addContainerGap())
@@ -123,7 +133,7 @@ public class StoreUI extends javax.swing.JFrame {
                         .addGap(27, 27, 27)
                         .addComponent(btn_update_list_client)
                         .addGap(33, 33, 33)
-                        .addComponent(jButton1))
+                        .addComponent(btn_show_cesta))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(29, 29, 29))
         );
@@ -138,14 +148,21 @@ public class StoreUI extends javax.swing.JFrame {
                 Integer index = table_productos_client.getSelectedRow();
                 if (index >= 0) {
                     DefaultTableModel model = (DefaultTableModel) table_productos_client.getModel();
-                    Producto producto = new Producto();
-                    producto.setSku((Integer) model.getValueAt(index, 0));
-                    producto.setNombre((String) model.getValueAt(index, 1));
-                    producto.setDescripcion((String) model.getValueAt(index, 2));
-                    producto.setUrlImagen((String) model.getValueAt(index, 3));
-                    producto.setCosto((Float) model.getValueAt(index, 4));
-                    producto.setCantidad((Integer) model.getValueAt(index, 5));
-                    new ProductoFormUI(producto, Propiedades.EDITAR).setVisible(true);
+                    Producto producto = null;
+                    Integer skuIndex = (Integer) model.getValueAt(index, 0);
+
+                    Catalogo c = new Catalogo();
+                    c = ss.getCatalogo();
+                    List<Producto> productos = null;
+                    productos = c.getProductos();
+
+                    for (Producto item : productos) {
+                        if (item.getSku().equals(skuIndex)) {
+                            producto = item;
+                            break;
+                        }
+                    }
+                    new ProductoUI(producto).setVisible(true);
                 }
             }
         });
@@ -153,16 +170,39 @@ public class StoreUI extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_show_producto_clientActionPerformed
 
     private void btn_add_producto_clientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_add_producto_clientActionPerformed
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new ProductoFormUI(Propiedades.REGISTRAR).setVisible(true);
+        Integer index = table_productos_client.getSelectedRow();
+        if (index >= 0) {
+            DefaultTableModel model = (DefaultTableModel) table_productos_client.getModel();
+            Producto producto = null;
+            Integer skuIndex = (Integer) model.getValueAt(index, 0);
+
+            Catalogo c = new Catalogo();
+            c = ss.getCatalogo();
+            List<Producto> productos = null;
+            productos = c.getProductos();
+
+            for (Producto item : productos) {
+                if (item.getSku().equals(skuIndex)) {
+                    producto = item;
+                    break;
+                }
             }
-        });
+            cs.addProductoToCesta(producto, 1);
+            JOptionPane.showMessageDialog(null, "Se agregó el producto a la cesta");
+        }
     }//GEN-LAST:event_btn_add_producto_clientActionPerformed
 
     private void btn_update_list_clientActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_update_list_clientActionPerformed
         updateTable();
     }//GEN-LAST:event_btn_update_list_clientActionPerformed
+
+    private void btn_show_cestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_show_cestaActionPerformed
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new CestaUI().setVisible(true);
+            }
+        });
+    }//GEN-LAST:event_btn_show_cestaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -221,9 +261,9 @@ public class StoreUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_add_producto_client;
+    private javax.swing.JButton btn_show_cesta;
     private javax.swing.JButton btn_show_producto_client;
     private javax.swing.JButton btn_update_list_client;
-    private javax.swing.JButton jButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table_productos_client;
     // End of variables declaration//GEN-END:variables

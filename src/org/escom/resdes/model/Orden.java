@@ -17,6 +17,11 @@ public class Orden implements Serializable{
     private Integer id;
     private Producto producto;
     private Integer cantidad;
+    
+    public Orden(){
+        this.producto = new Producto();
+        this.cantidad = 0;
+    }
 
     public Integer getId() {
         return id;
@@ -41,6 +46,10 @@ public class Orden implements Serializable{
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-    
+
+    @Override
+    public String toString() {
+        return "Orden{" + "id=" + id + ", producto=" + producto + ", cantidad=" + cantidad + '}';
+    }
     
 }
