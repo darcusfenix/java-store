@@ -11,7 +11,8 @@ package org.escom.resdes.app.config;
  */
 public class Propiedades {
     
-    public static final String PATH = "/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/";
+    public static final String PATH_SERVER = "/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/";
+    public static final String PATH_CLIENTE = "/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/";
     public static final String IP = "192.168.1.64";
     public static final Integer EDITAR = 1;
     public static final Integer REGISTRAR = 2;

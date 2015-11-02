@@ -115,7 +115,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
                 }
                 catalogo.setProductos(productos);
                 try {
-                    FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH + "PATH_SERVER/CATALOGO/catalogo.txt");
+                    FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH_SERVER + "PATH_SERVER/CATALOGO/catalogo.txt");
                     ObjectOutputStream out = new ObjectOutputStream(fileOut);
                     out.writeObject(catalogo);
                     out.close();

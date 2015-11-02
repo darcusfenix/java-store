@@ -51,7 +51,7 @@ public class ProductoUI extends javax.swing.JFrame {
     }
 
     public void updateInputs(Producto producto) {
-        ImageIcon image = new ImageIcon(Propiedades.PATH + "PATH_CLIENT/IMAGES/" + this.producto.getUrlImagen());
+        ImageIcon image = new ImageIcon(Propiedades.PATH_CLIENTE + "PATH_CLIENT/IMAGES/" + this.producto.getUrlImagen());
         this.label_img.setIcon(image);
         this.tf_descripcion_product.setText(this.producto.getDescripcion());
         this.tf_name_product.setText(this.producto.getNombre());
@@ -65,7 +65,7 @@ public class ProductoUI extends javax.swing.JFrame {
     }
 
     public void updateInputs(Orden orden) {
-        ImageIcon image = new ImageIcon(Propiedades.PATH + "PATH_CLIENT/IMAGES/" + this.orden.getProducto().getUrlImagen());
+        ImageIcon image = new ImageIcon(Propiedades.PATH_CLIENTE + "PATH_CLIENT/IMAGES/" + this.orden.getProducto().getUrlImagen());
         this.label_img.setIcon(image);
         this.tf_descripcion_product.setText(this.orden.getProducto().getDescripcion());
         this.tf_name_product.setText(this.orden.getProducto().getNombre());

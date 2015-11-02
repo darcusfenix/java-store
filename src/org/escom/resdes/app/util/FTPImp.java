@@ -43,7 +43,7 @@ public class FTPImp implements FTP {
             long leidos = 0, fin = tam, po = 0;
             int b_leidos = 0;
             //creamos el archivo que vamos a recibir, y lo ubicamos en la carpeta del proyecto
-            FileOutputStream inFile = new FileOutputStream(Propiedades.PATH + pathUser + "/" + nombre);
+            FileOutputStream inFile = new FileOutputStream(Propiedades.PATH_CLIENTE + pathUser + "/" + nombre);
 
             while ((fin > 0) && (b_leidos = ois.read(buf, 0, (int) Math.min(buf.length, fin))) != -1) {
 

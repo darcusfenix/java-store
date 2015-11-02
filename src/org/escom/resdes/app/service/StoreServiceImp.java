@@ -37,7 +37,7 @@ public class StoreServiceImp implements StoreService {
     public Catalogo getCatalogo() {
         Catalogo catalogo = null;
         try {
-            FileInputStream fileIn = new FileInputStream(Propiedades.PATH + "PATH_CLIENT/CATALOGO/catalogo.txt");
+            FileInputStream fileIn = new FileInputStream(Propiedades.PATH_CLIENTE + "PATH_CLIENT/CATALOGO/catalogo.txt");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             catalogo = (Catalogo) in.readObject();
             in.close();
@@ -55,7 +55,7 @@ public class StoreServiceImp implements StoreService {
     public Cesta getCesta() {
         Cesta cesta = null;
         try {
-            FileInputStream fileIn = new FileInputStream(Propiedades.PATH + "PATH_CLIENT/CESTA/cesta.txt");
+            FileInputStream fileIn = new FileInputStream(Propiedades.PATH_CLIENTE + "PATH_CLIENT/CESTA/cesta.txt");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             cesta = (Cesta) in.readObject();
             in.close();
@@ -73,7 +73,7 @@ public class StoreServiceImp implements StoreService {
     public void saveCesta(Cesta cesta) {
         System.out.println(cesta);
         try {
-            FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH + "PATH_CLIENT/CESTA/cesta.txt");
+            FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH_CLIENTE + "PATH_CLIENT/CESTA/cesta.txt");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(cesta);
             out.close();
