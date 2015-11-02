@@ -4,13 +4,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/app/Servidor.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/ui/client/Cesta.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/app/service/StoreServiceImp.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/app/service/StoreService.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/app/Cliente.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/ui/client/ProductoUI.java</file>
-            <file>file:/home/darcusfenix/Documentos/ESCOM/REDES-APPS/P2/java-store/src/org/escom/resdes/ui/client/StoreUI.java</file>
+            <file>file:/home/darcusfenix/Documents/ESCOM/REDES-APPS/java-store/src/org/escom/resdes/app/AppAdmin.java</file>
+            <file>file:/home/darcusfenix/Documents/ESCOM/REDES-APPS/java-store/src/org/escom/resdes/app/Cliente.java</file>
+            <file>file:/home/darcusfenix/Documents/ESCOM/REDES-APPS/java-store/src/org/escom/resdes/app/Servidor.java</file>
+            <file>file:/home/darcusfenix/Documents/ESCOM/REDES-APPS/java-store/src/org/escom/resdes/app/config/Propiedades.java</file>
+            <file>file:/home/darcusfenix/Documents/ESCOM/REDES-APPS/java-store/src/org/escom/resdes/jdbc/PostgreSQLJDBC.java</file>
         </group>
     </open-files>
 </project-private>
