@@ -5,13 +5,8 @@
  */
 package org.escom.resdes.ui;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import org.escom.resdes.app.Servidor;
 import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.model.Producto;
 import org.escom.resdes.repository.ProductoRepository;
@@ -79,11 +74,11 @@ public class AdminUI extends javax.swing.JFrame {
 
             },
             new String [] {
-                "sku", "nombre", "descripción", "imagen", "costo"
+                "sku", "nombre", "descripción", "imagen", "costo", "cantidad"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -167,6 +162,8 @@ public class AdminUI extends javax.swing.JFrame {
                     producto.setNombre((String) model.getValueAt(index, 1));
                     producto.setDescripcion((String) model.getValueAt(index, 2));
                     producto.setUrlImagen((String) model.getValueAt(index, 3));
+                    producto.setCosto((Float) model.getValueAt(index, 4));
+                    producto.setCantidad((Integer) model.getValueAt(index, 5));
                     new ProductoFormUI(producto, Propiedades.EDITAR).setVisible(true);
                 }
             }
@@ -232,7 +229,7 @@ public class AdminUI extends javax.swing.JFrame {
             model.removeRow(i);
         }
         for (Producto producto : productos) {
-            Object[] row = {producto.getSku(), producto.getNombre(), producto.getDescripcion(), producto.getUrlImagen(), producto.getCosto()};
+            Object[] row = {producto.getSku(), producto.getNombre(), producto.getDescripcion(), producto.getUrlImagen(), producto.getCosto(), producto.getCantidad()};
             model.addRow(row);
         }
     }

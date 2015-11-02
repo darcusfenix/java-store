@@ -63,6 +63,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setUrlImagen(rs.getString("url_imagen"));
                     producto.setCosto(rs.getFloat("costo"));
+                    producto.setCantidad(rs.getInt("cantidad"));
                     productos.add(producto);
                 }
             } catch (Exception e) {
@@ -107,6 +108,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setUrlImagen(rs.getString("url_imagen"));
                     producto.setCosto(rs.getFloat("costo"));
+                    producto.setCantidad(rs.getInt("cantidad"));
                     productos.add(producto);
                 }
                 try {
@@ -144,13 +146,14 @@ public class ProductoRepositoryImp implements ProductoRepository {
         if (bC.conectarse()) {
             Connection connection = bC.getConnection();
             PreparedStatement pst = null;
-            String stm = "INSERT INTO producto(nombre, descripcion, url_imagen, costo) VALUES(?, ?, ?, ?)";
+            String stm = "INSERT INTO producto(nombre, descripcion, url_imagen, costo, cantidad) VALUES(?, ?, ?, ?, ?)";
             try {
                 pst = connection.prepareStatement(stm);
                 pst.setString(1, producto.getNombre());
                 pst.setString(2, producto.getDescripcion());
                 pst.setString(3, producto.getUrlImagen());
                 pst.setFloat(4, producto.getCosto());
+                pst.setInt(5, producto.getCantidad());
                 pst.executeQuery();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -177,14 +180,15 @@ public class ProductoRepositoryImp implements ProductoRepository {
         if (bC.conectarse()) {
             Connection connection = bC.getConnection();
             PreparedStatement pst = null;
-            String stm = "UPDATE producto SET nombre=?, descripcion=?, url_imagen=?, costo=? WHERE sku=?;";
+            String stm = "UPDATE producto SET nombre=?, descripcion=?, url_imagen=?, costo=?, cantidad=? WHERE sku=?;";
             try {
                 pst = connection.prepareStatement(stm);
                 pst.setString(1, producto.getNombre());
                 pst.setString(2, producto.getDescripcion());
                 pst.setString(3, producto.getUrlImagen());
                 pst.setFloat(4, producto.getCosto());
-                pst.setInt(5, producto.getSku());
+                pst.setInt(5, producto.getCantidad());
+                pst.setInt(6, producto.getSku());
                 pst.executeUpdate();
             } catch (Exception e) {
                 System.err.println(e.getMessage());
@@ -252,6 +256,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
                     producto.setDescripcion(rs.getString("descripcion"));
                     producto.setUrlImagen(rs.getString("url_imagen"));
                     producto.setCosto(rs.getFloat("costo"));
+                    producto.setCantidad(rs.getInt("cantidad"));
                 }
             } catch (Exception e) {
                 System.err.println(e.getMessage());

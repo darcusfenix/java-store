@@ -33,6 +33,7 @@ public class Producto {
     private String descripcion;
     private String urlImagen;
     private float costo;
+    private Integer cantidad;
 
     public String getNombre() {
         return nombre;
@@ -72,6 +73,14 @@ public class Producto {
 
     public void setCosto(float costo) {
         this.costo = costo;
+    }
+
+    public Integer getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
     }
     
     @Override
