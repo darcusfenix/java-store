@@ -5,7 +5,7 @@
  */
 package org.escom.resdes.app;
 
-import org.escom.resdes.ui.AdminUI;
+import org.escom.resdes.ui.admin.AdminUI;
 
 /**
  *

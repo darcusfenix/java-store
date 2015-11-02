@@ -23,11 +23,15 @@
  */
 package org.escom.resdes.model;
 
+import java.io.Serializable;
+
 /**
  *
  * @author darcusfenix
  */
-public class Producto {
+public class Producto implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     private Integer sku;
     private String nombre;
     private String descripcion;
@@ -82,11 +86,10 @@ public class Producto {
     public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
-    
+
     @Override
     public String toString() {
         return "Producto{" + "sku=" + sku + ", nombre=" + nombre + ", descripcion=" + descripcion + ", urlImagen=" + urlImagen + '}';
     }
 
-    
 }

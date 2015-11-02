@@ -27,6 +27,7 @@ import java.net.*;
 import java.io.*;
 import org.escom.resdes.app.util.FTP;
 import org.escom.resdes.app.util.FTPImp;
+import org.escom.resdes.ui.client.StoreUI;
 
 public class Cliente {
 
@@ -40,26 +41,52 @@ public class Cliente {
     }
 
     public void conectarse() throws Exception {
-        int i;
 
         try {
             //creamos el socket con la dirección y el puerto de comunicación
             Socket cl = new Socket(InetAddress.getByName("127.0.0.1"), 4040);
             cl.setSoTimeout(3000);
             System.out.println("Cliente conectado con servidor..\n transfiriendo archivo..");
+            for (;;) {
+                ObjectOutputStream oos = new ObjectOutputStream(cl.getOutputStream());
+                ObjectInputStream ois = new ObjectInputStream(cl.getInputStream());
 
-            ObjectOutputStream oos = new ObjectOutputStream(cl.getOutputStream());
+                //oos.writeObject(Propiedades.SOLICITUD_IMG);
+                recibirImagenes(ois);
+                recibirCatalogo(ois);
+                showUI();
 
-            oos.writeObject(f.length);
-
-            for (i = 0; i < f.length; i++) {
-                ftp.enviarArchivo(f[i].getAbsolutePath(), f[i].getName(), f[i].length(), oos);
             }
-
-            oos.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean recibirImagenes(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer files = (Integer) ois.readObject();
+
+        System.out.println("Archivos a recibir: " + files);
+
+        for (int i = 0; i < files; i++) {
+            ftp.recibeArchivo(ois, "PATH_CLIENT/IMAGES/");
+        }
+        return true;
+    }
+
+    public boolean recibirCatalogo(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+        Integer files = (Integer) ois.readObject();
+        System.out.println("Archivos a recibir: " + files);
+        for (int i = 0; i < files; i++) {
+            ftp.recibeArchivo(ois, "PATH_CLIENT/CATALOGO/");
+        }
+        return true;
+    }
+    public void showUI(){
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new StoreUI().setVisible(true);
+            }
+        });
     }
 
     public static void main(String[] args) throws Exception {

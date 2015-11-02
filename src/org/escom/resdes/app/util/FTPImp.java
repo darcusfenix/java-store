@@ -33,11 +33,12 @@ public class FTPImp implements FTP {
             path = (String) ois.readObject();
             //obtenemos el tamaño del archivo
             tam = (Long) ois.readObject();
+            
             System.out.println("\n\nArchivo a recibir: " + nombre + " \ntamaño: " + tam + " bytes-> ruta: " + path);
 
                    // int l=(int)(long)tam;
             //creamos el array de bytes paa leer los datos del archivo
-            byte[] buf = new byte[1024];
+            byte[] buf = new byte[2024];
             //obtenemos el archivo
             long leidos = 0, fin = tam, po = 0;
             int b_leidos = 0;
@@ -69,12 +70,14 @@ public class FTPImp implements FTP {
             //creamos el archivo que vamos a enviar
             FileInputStream archivo = new FileInputStream(path);
             System.out.println("\nArchivo seleccionado: " + nombreArchivo);
+            
             //Enviamos el nombre del archivo
             oos.writeObject(nombreArchivo);
             //Enviamos el direccion del archivo
             oos.writeObject(path);
             //Enviamos el tamaño del archivo
             oos.writeObject(tam);
+            
             byte[] buf2 = new byte[1024];
             //enviamos los bytes del archivo
             int b_leidos = 0, tam_bloque;

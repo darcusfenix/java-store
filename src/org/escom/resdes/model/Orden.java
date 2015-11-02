@@ -7,29 +7,40 @@ package org.escom.resdes.model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author darcusfenix
  */
 public class Orden implements Serializable{
-    private List<Producto> productos;
-    private float total;
+    private Integer id;
+    private Producto producto;
+    private Integer cantidad;
 
-    public List<Producto> getProductos() {
-        return productos;
+    public Integer getId() {
+        return id;
     }
 
-    public void setProductos(List<Producto> productos) {
-        this.productos = productos;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+    
+    public Producto getProducto() {
+        return producto;
     }
 
-    public float getTotal() {
-        return total;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
-    public void setTotal(float total) {
-        this.total = total;
+    public Integer getCantidad() {
+        return cantidad;
     }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+    
     
 }

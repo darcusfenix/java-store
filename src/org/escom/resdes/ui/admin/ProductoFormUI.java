@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.escom.resdes.ui;
+package org.escom.resdes.ui.admin;
 
 import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.model.Producto;

@@ -35,6 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import org.escom.resdes.app.config.Propiedades;
 import org.escom.resdes.jdbc.PostgreSQLJDBC;
+import org.escom.resdes.model.Catalogo;
 import org.escom.resdes.model.Producto;
 
 /**
@@ -90,6 +91,7 @@ public class ProductoRepositoryImp implements ProductoRepository {
 
     @Override
     public void saveCatalogoOnServer() {
+        Catalogo catalogo = new Catalogo();
         List<Producto> productos = new ArrayList<Producto>();
 
         PostgreSQLJDBC bC = new PostgreSQLJDBC();
@@ -111,10 +113,11 @@ public class ProductoRepositoryImp implements ProductoRepository {
                     producto.setCantidad(rs.getInt("cantidad"));
                     productos.add(producto);
                 }
+                catalogo.setProductos(productos);
                 try {
                     FileOutputStream fileOut = new FileOutputStream(Propiedades.PATH + "PATH_SERVER/CATALOGO/catalogo.txt");
                     ObjectOutputStream out = new ObjectOutputStream(fileOut);
-                    out.writeObject(productos);
+                    out.writeObject(catalogo);
                     out.close();
                     fileOut.close();
                 } catch (IOException io) {
